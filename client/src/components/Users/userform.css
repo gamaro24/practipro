@@ -1,0 +1,12 @@
+.card-register {
+    width: 30rem;
+    padding-bottom: 1rem;
+    border-radius: 10px !important;
+}
+
+.login-view {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2rem;
+}

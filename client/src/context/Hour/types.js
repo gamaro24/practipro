@@ -1,0 +1,5 @@
+export const GET_HOUR_DATA = "GET_HOUR_DATA";
+export const SET_HOURS = "SET_HOURS";
+export const CLEAN_HOUR_DATA = "CLEAN_HOUR_DATA";
+export const SET_HOUR_FILTERED = "SET_HOUR_FILTERED";
+export const GET_HOUR_DATA_EDIT = "GET_HOUR_DATA_EDIT";

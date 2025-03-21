@@ -1,0 +1,2 @@
+export const GET_ALL_ROLES = "GET_ALL_ROLES";
+export const GET_ALL_UNIVERSITIES = "GET_ALL_UNIVERSITIES";

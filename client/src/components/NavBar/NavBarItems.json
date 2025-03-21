@@ -1,0 +1,56 @@
+{
+    "items":[
+        {
+            "name": "Registro Usuario",
+            "navigate": "/user/create",
+            "authRole": [1]  
+        },
+        
+        {
+            "name": "Universidades",
+            "navigate": "/universities",
+            "authRole": [1]
+        },
+        {
+            "name": "Usuarios",
+            "navigate": "/users",
+            "authRole": [1]  
+        },
+        {
+            "name": "Alumnos",
+            "navigate": "/users",
+            "authRole": [2,4]  
+        },
+        {
+            "name": "Carreras",
+            "navigate": "/carrers",
+            "authRole": [1]  
+        },
+        {
+            "name": "Institutos",
+            "navigate": "/institutions",
+            "authRole": [1]  
+        },
+        {
+            "name": "Libreta",
+            "navigate": "/notebook",
+            "authRole": [3]  
+        },
+        {
+            "name": "Horas",
+            "navigate": "/assist",
+            "authRole": [3]  
+        },
+        {
+            "name": "Perfil",
+            "navigate": "/profile",
+            "authRole": [1,2,3,4]  
+        },
+        {
+            "name": "Firmar Asistencias",
+            "navigate": "/assist",
+            "authRole": [2,4]
+        }
+
+    ]
+}
