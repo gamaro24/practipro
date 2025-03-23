@@ -1,4 +1,3 @@
-import "../App.css";
 import { toast } from "react-toastify";
 
 //devuelven la config de una alerta

@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from "react";
+import React from "react";
 import "./start.css";
 import logo from "../../assets/practipro.svg";
 

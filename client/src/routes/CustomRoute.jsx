@@ -4,7 +4,6 @@ import Home from "../components/Home/Home";
 import Login from "../components/Login/Login";
 import Logout from "../components/Logout/Logout";
 import Users from "../components/Users/Users";
-
 import Start from "../components/Start/Start";
 import PrivateRoute from "../routes/PrivateRoute";
 import { allowStudent, allowAllUsers, allowProfessorAndAdmin, allowAdmin, allowProfessorAndSupervisor, allowHigherStatus } from "../helpers/helpers";
@@ -23,7 +22,6 @@ import Evaluations from "../components/Evaluations/Evaluations";
 import EvaluationsForm from "../components/Evaluations/EvaluationsForm";
 import Profile from "../components/Profile/Profile";
 import Notebook from "../components/Notebook/Notebook";
-import QR from "../components/QR/QR";
 
 
 const CustomRoute = () => (

@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./hours.css";
 import { HourContext } from "../../context/Hour/HourContext";
 import { HoursList } from './HoursList';

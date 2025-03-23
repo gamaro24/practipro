@@ -71,20 +71,6 @@ export const UserState = ({ children }) => {
   };
 
   const getUsersFiltered = async (page, params) => {
-/*     const userFounded = state.usersFiltered.find(
-      (user) => user.id === params.id
-    );
-
-    if (userFounded) {
-      return dispatch({
-        type: "SET_USERS_FILTERED",
-        payload: {
-          usersFiltered: [userFounded],
-          totalUsersPages: 1,
-        },
-      });
-    } */
-
     const getUsers = await reqAxios(
       "get",
       `/user/get/users/${page}`,

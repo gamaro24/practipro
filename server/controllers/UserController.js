@@ -4,10 +4,7 @@ const jwt = require("jsonwebtoken");
 const { transporter } = require("../utils/utils");
 const path = require("path");
 const Sequelize = require("sequelize");
-//const excelJS = require("exceljs");
 const { PAGE_LIMIT } = process.env;
-//const EXCEL_CELL_WIDTH = 12;
-//const RoleController = require("../controllers/RoleController");
 const { calcNumOffset, calcTotalPages } = require("../helpers/helpers");
 
 //NODEMAILER
@@ -144,7 +141,7 @@ exports.getAllPaginated = async (req, res) => {
       options.where.roleId = 3;
     }
     if (roleIdLogged == 1 && roleId) {
-        options.where.roleId = roleId;
+      options.where.roleId = roleId;
     }
     const { count, rows } = await UserModel.findAndCountAll(options);
     const cantPages = calcTotalPages(count);
@@ -222,11 +219,6 @@ exports.create = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    /*     let encryptedPassword = jwt.sign(
-          { password },
-          process.env.JWT_ACOUNT_ACTIVE
-        ); */
-
     //registra al usuario en la base de datos
     const user = await UserModel.create({
       username: username,
@@ -280,106 +272,6 @@ exports.create = async (req, res) => {
     });
   }
 };
-
-exports.acountActivate = async (req, res) => {
-  try {
-    const token = req.params.token;
-    if (token) {
-      //verifica el token
-      jwt.verify(token, process.env.JWT_ACOUNT_ACTIVE, async (err, decoded) => {
-        if (err) {
-          return res
-            .status(401)
-            .json({ msg: "Token incorrecto o el tiempo expiró." });
-        }
-        console.log("se verifico correctamente el token");
-        const {
-          name,
-          surname,
-          email,
-          roleId,
-          identifyType,
-          identifyNumber,
-          address,
-          institution,
-          phone,
-          password,
-        } = decoded;
-
-        //encripta la contraseña
-        /* let encryptedPassword = bcrypt.hashSync(password, 10); */
-        let encryptedPassword = jwt.sign(
-          { password },
-          process.env.JWT_ACOUNT_ACTIVE
-        );
-
-        //verifica que el usuario no exista
-        const oldUser = await UserModel.findOne({
-          where: { identifyNumber: identifyNumber },
-        });
-
-        if (oldUser) {
-          return res.status(409).json({ msg: "El usuario ya existe." });
-        }
-        //registra al usuario en la base de datos
-        const user = await UserModel.create({
-          name: name,
-          surname: surname,
-          password: encryptedPassword,
-          email: email,
-          address: address,
-          roleId: roleId,
-          identifyType: identifyType,
-          identifyNumber: identifyNumber,
-          institution: institution,
-          phone: phone,
-        });
-
-        const role = await RoleModel.findByPk(roleId);
-
-        if (user) {
-          var mailOptions = {
-            from: process.env.EMAIL_APP,
-            to: email,
-            subject: "Cuenta activada - credenciales",
-            template: "mailCredentials",
-            attachments: [
-              {
-                ffilename: "appLogo.jpg",
-                path: "./public/logos/appLogo.jpg",
-                cid: "logo",
-              },
-            ],
-            context: {
-              id: identifyNumber,
-              password: password,
-              name: name + " " + surname,
-              roleName: role.name,
-              email: email,
-              phone: phone,
-              address: address,
-            },
-          };
-
-          transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              return res.status(500).json({ msg: error.message });
-            } else {
-              console.log("Email enviado!");
-              res.end();
-            }
-          });
-          return res.status(200).json({ response: "Usuario registrado!" });
-        } else {
-          return res.status(500).json({ msg: "Error al registrar el usuario" });
-        }
-      });
-    }
-  } catch (error) {
-    console.log("Error al registrar el usuario");
-  }
-};
-
 
 exports.updateById = async (req, res) => {
   try {

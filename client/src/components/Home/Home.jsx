@@ -1,9 +1,6 @@
-import "../../App.css";
 import "./home.css";
-//import { Login } from "../../components/Login/Login";
 import { Footer } from "../../components/Footer/Footer";
-import { AppContext } from "../../context/App/AppContext";
-import { isAuthenticated } from "../../helpers/helpers";
+
 import Navbar from "../NavBar/NavBar";
 
 const Home = ({ children }) => {
@@ -15,9 +12,9 @@ const Home = ({ children }) => {
                         <Navbar></Navbar>
                         <div className="p-2"></div>
                         {children}
-                        <Footer></Footer>
                     </div>
               </div>
+              <Footer></Footer>
           </div>
         </>
       );

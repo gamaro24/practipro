@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./carrers.css";
 import { CarrerContext } from "../../context/Carrer/CarrerContext";
 import { CarrersList } from './CarrersList';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModalDelete from "../Modals/ModalDelete";
 import { PaginationCustom } from "../Pagination/Pagination";
 

@@ -1,12 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./cycles.css";
 import { CycleContext } from "../../context/Cycle/CycleContext";
 import { CyclesList } from './CyclesList';
 import { useNavigate, useParams } from "react-router-dom";
-import ModalSign from "../Modals/ModalSign"; //cambiarlo por ver notas
 import { PaginationCustom } from "../Pagination/Pagination";
-import { getDataUserByKey } from "../../helpers/helpers";
 
 
 const Cycles = () => {

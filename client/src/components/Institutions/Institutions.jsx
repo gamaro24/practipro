@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./institutions.css";
 import { InstitutionContext } from "../../context/Institution/InstitutionContext";
 import { InstitutionsList } from './InstitutionsList';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModalDelete from "../Modals/ModalDelete";
 import ModalQr from "../Modals/ModalQr";
 import { PaginationCustom } from "../Pagination/Pagination";

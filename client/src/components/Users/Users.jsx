@@ -6,7 +6,6 @@ import { Button } from "react-bootstrap";
 import Select from "react-select";
 import { getDataUserByKey, reqAxiosDownload, translateRole } from "../../helpers/helpers";
 import { UserContext } from "../../context/User/UserContext";
-import { ExtensiveList } from "../ExtensiveList/ExtensiveList";
 import { RegisterContext } from "../../context/Register/RegisterContext";
 import "./users.css";
 import { PaginationCustom } from "../Pagination/Pagination";

@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./assist.css";
 import { AssistContext } from "../../context/Assist/AssistContext";
 import { AssistsList } from './AssistsList';

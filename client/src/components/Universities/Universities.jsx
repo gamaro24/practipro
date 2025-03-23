@@ -1,11 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Button, Form } from "react-bootstrap";
-import "../../App.css";
 import "./universities.css";
-import { Footer } from "../Footer/Footer";
-import { AppContext } from "../../context/App/AppContext";
-import { isAuthenticated } from "../../helpers/helpers";
-import Navbar from "../NavBar/NavBar";
 import { UniversityContext } from "../../context/University/UniversityContext";
 import { UniversitiesList } from './UniversitiesList';
 import { useNavigate, useParams } from "react-router-dom";
