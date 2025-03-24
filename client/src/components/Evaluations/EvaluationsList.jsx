@@ -17,7 +17,7 @@ export const EvaluationsList = ({
         <td>{`${evaluation?.criteria}`}</td>
         <td>{evaluation?.note ?? "Pendiente"}</td>
         <td className="">
-          <ToolTip tooltip={true} text={"Ver Evaluaciones"}>
+          <ToolTip tooltip={true} text={"Editar"}>
             <i
               type="button"
               className="color-icon-edit fa-solid fa-pen-to-square icon-size-table btn-edit-table"

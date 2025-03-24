@@ -1,25 +1,45 @@
-import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from "react-toastify";
-import { alertError } from "../../helpers/alerts";
+import React, {useContext, useEffect } from 'react';
 import "./profile.css";
-import { UserContext } from "../../context/User/UserContext";
 
 import { UniversityContext } from "../../context/University/UniversityContext";
 import { CarrerContext } from "../../context/Carrer/CarrerContext";
-import { useNavigate, useParams } from "react-router-dom";
-import { getDataUserByKey} from "../../helpers/helpers";
+import { useNavigate } from "react-router-dom";
+import { getDataUserByKey } from "../../helpers/helpers";
 
 const Profile = () => {
 
+    const universityId = (getDataUserByKey("universityId"));
+    const carrerId = (getDataUserByKey("carrerId"));
+
+
+    const { universityState, getUniversityData } = useContext(UniversityContext);
+    const { universityData } = universityState;
+
+    const { carrerState, getCarrerData } = useContext(CarrerContext);
+    const { carrerData } = carrerState;
+
+    useEffect(() => {
+        if (!universityData.id && universityId) {
+            getUniversityData(universityId);
+        }
+    }, [universityData, universityId, getUniversityData]);
+
+    useEffect(() => {
+        if (!carrerData.id && carrerId) {
+            getCarrerData(carrerId);
+        }
+    }, [carrerData, carrerId, getCarrerData]);
+
     const navigate = useNavigate();
+
+
 
     const roleId = getDataUserByKey("roleId");
     const roleNames = {
-      1: "Administrador",
-      2: "Profesor",
-      3: "Estudiante",
-      4: "Supervisor"
+        1: "Administrador",
+        2: "Profesor",
+        3: "Estudiante",
+        4: "Supervisor"
     };
 
     return (
@@ -30,30 +50,36 @@ const Profile = () => {
 
                         <h3 className="card-title h3 mb-3 fw-normal">Perfil { }</h3>
 
-                            <div className="p-2"></div>
-                            <div className="flex items-center bg-white shadow-lg rounded-lg p-4 max-w-sm mx-auto">
-                                {/* Profile Image */}
-                                <div className="mr-4 w-16 h-16 overflow-hidden rounded-full border-4 border-blue-500">
-                                    <img
-                                        src="src/assets/user2.jpg"
-                                        alt="Perfil"
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                                {/* User Details */}
-                                <div>
-                                    <h5 className="text-lg font-bold">{`${getDataUserByKey("name")} ${getDataUserByKey("lastname")}`}</h5>
-                                    <p className="text-gray-600">{roleNames[roleId] || ""}</p>
-                                    <p className="text-sm">
-                                        <strong>Email:</strong> {getDataUserByKey("email")}
-                                    </p>
-                                    <p className="text-sm">
-                                        <strong>Teléfono:</strong> {getDataUserByKey("cellphone")}
-                                    </p>
-                                </div>
+                        <div className="p-2"></div>
+                        <div className="flex items-center bg-white shadow-lg rounded-lg p-4 max-w-sm mx-auto">
+                            {/* Profile Image */}
+                            <div className="mr-4 w-16 h-16 overflow-hidden rounded-full border-4 border-blue-500">
+                                <img
+                                    src="src/assets/user2.jpg"
+                                    alt="Perfil"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
+                            {/* User Details */}
+                            <div>
+                                <h5 className="text-lg font-bold">{`${getDataUserByKey("name")} ${getDataUserByKey("lastname")}`}</h5>
+                                <p className="text-gray-600">{roleNames[roleId] || ""}</p>
+                                <p className="text-sm">
+                                    <strong>Email:</strong> {getDataUserByKey("email")}
+                                </p>
+                                <p className="text-sm">
+                                    <strong>Teléfono:</strong> {getDataUserByKey("cellphone")}
+                                </p>
+                                <p className="text-sm">
+                                    <strong>Universidad:</strong> {universityData?.name}
+                                </p>
+                                <p className="text-sm">
+                                    <strong>Carrera:</strong> {carrerData?.name}
+                                </p>
+                            </div>
+                        </div>
 
-                            <div className="p-2"></div>
+                        <div className="p-2"></div>
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { deleteAxios, deleteFile, reqAxios, waitAndRefresh } from "../../helpers/helpers";
+import { reqAxios, waitAndRefresh } from "../../helpers/helpers";
 
 const ModalSign = ({ entity, showAlertSign }) => {
 

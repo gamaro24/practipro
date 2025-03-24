@@ -47,6 +47,7 @@ const Evaluations = () => {
                       <th>Alumno</th>
                       <th>Descripción</th>
                       <th>Nota</th>
+                      <th>Editar</th>
                     </tr>
                   </thead>
                   <tbody>

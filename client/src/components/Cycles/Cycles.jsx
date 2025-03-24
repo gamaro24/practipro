@@ -42,13 +42,14 @@ const Cycles = () => {
           cyclesFiltered?.length > 0 ? (
             <>
               <div style={{ overflowX: "auto" }}>
-                <table className="table table-hover">
+                <table className="table table-hover text-center">
                   <thead>
                     <tr>
                       <th>Nombre</th>
                       <th>Rotacion</th>
                       <th>Instituto</th>
                       <th>Carrera</th>
+                      <th>Notas</th>
                     </tr>
                   </thead>
                   <tbody>

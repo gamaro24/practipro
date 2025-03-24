@@ -1,4 +1,4 @@
-import { GET_HOUR_DATA, SET_HOURS, CLEAN_HOUR_DATA, SET_HOUR_FILTERED, GET_HOUR_DATA_EDIT } from "./types.js";
+import { GET_HOUR_DATA, SET_HOURS, CLEAN_HOUR_DATA, SET_HOUR_FILTERED,SET_HOUR_FILTERED_ADMIN, GET_HOUR_DATA_EDIT } from "./types.js";
 
 export default (state, action) => {
   const { payload, type } = action;
@@ -30,6 +30,12 @@ export default (state, action) => {
         hoursFiltered: payload.hoursFiltered,
         totalHoursPages: payload.totalHoursPages,
       };
+      case SET_HOUR_FILTERED_ADMIN:
+        return {
+          ...state,
+          hoursFiltered: payload.hoursFiltered,
+          totalHoursPages: payload.totalHoursPages,
+        };
 
     default:
       return state;

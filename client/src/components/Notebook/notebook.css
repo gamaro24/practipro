@@ -1,0 +1,25 @@
+/* Estilos para la tabla */
+.table-bordered th,
+.table-bordered td {
+    border: 2px solid black !important;
+}
+
+/* Estilos para los títulos de la tabla */
+thead th {
+    background-color: #007bff !important; /* Azul Bootstrap */
+    color: white !important;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Estilos para la primera columna */
+tbody td:first-child {
+    background-color: #add8e6 !important; /* Azul claro */
+    font-weight: bold;
+}
+
+/* Estilos para los títulos principales */
+h1, h2 {
+    font-weight: bold;
+    text-align: center;
+}

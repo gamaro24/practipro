@@ -218,19 +218,6 @@ exports.getAllPaginated = async (req, res) => {
     console.log("Las asistencias no existen." + error);
   }
 };
-/* exports.sign = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { roleId } = req.query;
-    const updateField = roleId == 2 ? { signProfessor: true } : { signSupervisor: true };
-
-    await AssistModel.update(updateField, { where: { id } });
-    return res.status(200).json({ msg: "Asistencia firmada correctamente!" });
-  } catch (error) {
-    console.error("La asistencia no existe!", error);
-    return res.status(500).json({ msg: "Error al firmar la asistencia." });
-  }
-}; */
 
 exports.sign = async (req, res) => {
   try {
@@ -294,19 +281,17 @@ exports.sign = async (req, res) => {
         "Capacidad de integración en equipo",
         "Relación con el contexto social y comunitario",
         "Puntajes totales",
-        "Total de horas cumplidas"
       ];
 
       const evaluations = criteriaList.map(criteria => ({
         cycleId: newCycle.id,
         criteria,
-        note: null, // Will be set later
+        note: null,
         observations: null
       }));
 
       await EvaluationModel.bulkCreate(evaluations);
 
-      // Update the 3 assists with the new cycle ID
       await AssistModel.update(
         { cycleId: newCycle.id },
         {
@@ -328,8 +313,8 @@ exports.createAssistByQR = async (req, res) => {
   try {
     const Op = Sequelize.Op;
     const currentTime = new Date();
-    const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutes before
-    const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes after
+    const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
+    const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
 
     const userId = req.body.userId || req.query.userId;
     const institutionId = req.params.institutionId;
@@ -338,7 +323,6 @@ exports.createAssistByQR = async (req, res) => {
       return res.status(400).json({ msg: "Todos los campos son requeridos." });
     }
 
-    // Retrieve user details to get universityId and carrerId
     const user = await UserModel.findOne({
       where: { id: userId },
       attributes: ["universityId", "carrerId"],
@@ -348,14 +332,13 @@ exports.createAssistByQR = async (req, res) => {
       return res.status(404).json({ msg: "Usuario no encontrado." });
     }
 
-    // Find an hour that matches institutionId, universityId, carrerId, and time range
     const existingHour = await HourModel.findOne({
       where: {
         institutionId,
         universityId: user.universityId,
         carrerId: user.carrerId,
         dateFrom: {
-          [Op.between]: [minTime, maxTime], // Time range check
+          [Op.between]: [minTime, maxTime], // Chequear rango de tiempo
         },
       },
     });
@@ -364,7 +347,7 @@ exports.createAssistByQR = async (req, res) => {
       return res.status(404).json({ msg: "No hay un horario válido dentro del rango permitido." });
     }
 
-    // Check if the assist already exists (using the correct hourId)
+    // Verificar si existe la hora
     const checkAssist = await AssistModel.findOne({
       where: { userId, hourId: existingHour.id },
     });
@@ -373,10 +356,9 @@ exports.createAssistByQR = async (req, res) => {
       return res.status(409).json({ msg: "Esta asistencia ya está registrada!" });
     }
 
-    // Register the assist
     const assist = await AssistModel.create({
       userId,
-      hourId: existingHour.id, // Corrected to match the found hour
+      hourId: existingHour.id,
     });
 
     return res.status(200).json({

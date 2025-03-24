@@ -26,7 +26,7 @@ const Institutions = () => {
   const { institutions, totalInstitutionsPages, institutionsFiltered } = institutionState;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [carrerToDelete, setCarrerToDelete] = useState(false);
+  const [institutionToDelete, setInstitutionToDelete] = useState(false);
 
   const [filters, setFilters] = useState(initialFilters);
   const [page, setPage] = useState(1);
@@ -50,7 +50,7 @@ const Institutions = () => {
   return (
     <>
       {showDeleteModal ? (
-        <ModalDelete entity={carrerToDelete} showAlert={setShowDeleteModal} />
+        <ModalDelete entity={institutionToDelete} showAlert={setShowDeleteModal} />
       ) : null}
 
       {showModalQr && (
@@ -61,12 +61,12 @@ const Institutions = () => {
         </ModalQr>
       )}
       <div className="ms-3 me-3">
-        <h2 className="text-center">Listado de Institutos</h2>
+        <h2 className="text-center">Listado de Establecimientos</h2>
         {
           institutionsFiltered?.length > 0 ? (
             <>
               <div style={{ overflowX: "auto" }}>
-                <table className="table table-hover">
+                <table className="table table-hover text-center">
                   <thead>
                     <tr>
                       <th>Nombre</th>
@@ -74,7 +74,10 @@ const Institutions = () => {
                       <th>Descripcion</th>
                       <th>Ver horas</th>
                       <th>QR</th>
-                      
+                      {isAdmin ? (<th>Editar</th>) : ""}
+                      {isAdmin ? (<th>Eliminar</th>) : ""}
+                      <th></th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -83,7 +86,7 @@ const Institutions = () => {
                         institution={institution}
                         key={institution.id}
                         showAlert={setShowDeleteModal}
-                        setCarrerToDelete={setCarrerToDelete}
+                        setInstitutionToDelete={setInstitutionToDelete}
                         isAdmin={isAdmin}
                         setQrValue={setQrValue}
                         setShowModalQr={setShowModalQr}
@@ -93,12 +96,12 @@ const Institutions = () => {
                 </table>
               </div>
 
-              <div className="p-2">
+              <div className="p-2 text-center">
 
                 {isAdmin && (
-                  <button className="w-100 btn btn-lg btn-primary"
+                  <button className="btn btn-lg btn-primary"
                     onClick={() => navigate("/institution/create/")}>
-                    Agregar Instituto</button>
+                    Agregar Establecimiento</button>
                 )}
               </div>
 

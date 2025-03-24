@@ -13,6 +13,7 @@ const UserModel = require("../models/UserModel");
 const CarrerModel = require("../models/CarrerModel");
 const InstitutionModel = require("../models/InstitutionModel");
 const EvaluationModel = require("../models/EvaluationModel");
+const UniversityModel = require("../models/UniversityModel");
 
 exports.getAllPaginated = async (req, res) => {
   try {
@@ -69,12 +70,18 @@ exports.getNotebook = async (req, res) => {
     const Op = Sequelize.Op;
 
     let options = {
-      //where: {},
       include: [
         {
           model: UserModel,
           as: "user",
           required: true,
+          include: [
+            {
+              model: UniversityModel,
+              as: "university",  // Ensure alias matches the defined relationship in your models
+              required: true,
+            },
+          ],
         },
         {
           model: EvaluationModel,
@@ -82,7 +89,6 @@ exports.getNotebook = async (req, res) => {
           required: true,
         },
       ],
-
     };
 
     if (userId) options.include[0].where = { id: userId };

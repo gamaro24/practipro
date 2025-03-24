@@ -1,19 +1,22 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import { deleteAxios, deleteFile, reqAxios, waitAndRefresh } from "../../helpers/helpers";
+import { deleteAxios, reqAxios, waitAndRefresh } from "../../helpers/helpers";
 
 const ModalDelete = ({ entity, showAlert }) => {
-  //entity.entityType -> instance/partner/customer
   
   const deleteEntity = async () => {
-
-    const entityDeleted = await deleteAxios(
-      `/${entity.entityType}/delete/${entity.id}`
-    );
-    showAlert(false);
-    if (entityDeleted.status === 200) {
-      waitAndRefresh(entity.navigate, 1000);
-      //await reqAxios("GET", "/universities/getall", "", "");
+    try {
+      const entityDeleted = await deleteAxios(
+        `/${entity.entityType}/delete/${entity.id}`
+      );
+  
+      showAlert(false); // Close modal even if there’s an error
+      if (entityDeleted?.status === 200) {
+        waitAndRefresh(entity.navigate, 1000);
+      }
+    } catch (error) {
+      console.error("Error deleting entity:", error);
+      showAlert(false); // Ensure modal closes on failure
     }
   };
 
