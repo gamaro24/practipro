@@ -8,6 +8,7 @@ router.post("/create", HourController.create);
 router.get("/get/:id", auth.verifyToken, HourController.getById);
 router.get("/getall", HourController.getAll);
 router.get("/get/getHours/:page", HourController.getHours);
+router.get("/get/getHoursAdmin/:page", HourController.getHoursAdmin);
 //router.get("/get/hours/:page", HourController.getAllPaginated);
 router.delete("/delete/:id", auth.verifyToken, HourController.deleteById);
 

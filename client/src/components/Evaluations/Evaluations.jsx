@@ -1,11 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./evaluations.css";
 import { EvaluationContext } from "../../context/Evaluation/EvaluationContext";
 import { EvaluationsList } from './EvaluationsList';
 import { useNavigate, useParams } from "react-router-dom";
 import { PaginationCustom } from "../Pagination/Pagination";
-import { getDataUserByKey } from "../../helpers/helpers";
 
 
 const Evaluations = () => {
@@ -49,6 +47,7 @@ const Evaluations = () => {
                       <th>Alumno</th>
                       <th>Descripción</th>
                       <th>Nota</th>
+                      <th>Editar</th>
                     </tr>
                   </thead>
                   <tbody>

@@ -18,7 +18,7 @@ export const InstitutionsList = ({ institution, setInstitutionToDelete, showAler
     setInstitutionToDelete({
       id: institution.id,
       entityName: institution.name,
-      entityType: "institutions",
+      entityType: "institution",
       navigate: window.location.pathname,
     });
   };

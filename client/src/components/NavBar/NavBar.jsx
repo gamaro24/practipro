@@ -1,8 +1,10 @@
 import "./navbar.css";
+import logo from "../../assets/practiproiso.svg";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { isAuthenticated, getDataUserByKey } from "../../helpers/helpers";
 import NavBarItems from "./NavBarItems";
+
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -23,7 +25,8 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="logo" onClick={() => handleNavigate("/")}>
-        <img className="logoImg" src="src/assets/practiproiso.svg" alt="logo" />
+        <img className="d-block d-md-none" src={logo} alt="" width="50" height="50" />
+        <img className="d-none d-md-block mb-4" src={logo} alt="" width="50" height="50" />
       </div>
 
       {/* Mobile Menu Icon */}

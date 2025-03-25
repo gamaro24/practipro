@@ -1,12 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./cycles.css";
 import { CycleContext } from "../../context/Cycle/CycleContext";
 import { CyclesList } from './CyclesList';
 import { useNavigate, useParams } from "react-router-dom";
-import ModalSign from "../Modals/ModalSign"; //cambiarlo por ver notas
 import { PaginationCustom } from "../Pagination/Pagination";
-import { getDataUserByKey } from "../../helpers/helpers";
 
 
 const Cycles = () => {
@@ -45,13 +42,14 @@ const Cycles = () => {
           cyclesFiltered?.length > 0 ? (
             <>
               <div style={{ overflowX: "auto" }}>
-                <table className="table table-hover">
+                <table className="table table-hover text-center">
                   <thead>
                     <tr>
                       <th>Nombre</th>
                       <th>Rotacion</th>
                       <th>Instituto</th>
                       <th>Carrera</th>
+                      <th>Notas</th>
                     </tr>
                   </thead>
                   <tbody>

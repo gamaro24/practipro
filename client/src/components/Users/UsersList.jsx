@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { useLocation, useNavigate } from "react-router";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ToolTip } from "../ToolTip/ToolTip";
-import { getDataUserByKey } from "../../helpers/helpers";
+import { getDataUserByKey, translateRole } from "../../helpers/helpers";
 
 export const UsersList = ({
   user,
@@ -14,9 +13,6 @@ export const UsersList = ({
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
-  //const { setUserIdToCertificate } = useContext(CertificateContext);
-
-  /*  const startDate = user.startDate.split('-') */
 
   const deleteUser = () => {
     showAlert(true);
@@ -49,7 +45,7 @@ export const UsersList = ({
         
         {isAdmin && (
           <>
-            <td>{user?.role?.name}</td>
+            <td>{translateRole(user?.role?.name)}</td>
             <td className="">
               <ToolTip tooltip={true} text={"Editar usuario"}>
                 <i

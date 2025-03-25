@@ -224,8 +224,54 @@ exports.getHours = async (req, res) => {
         options.where.institutionId = { [Op.like]: `%${institutionId}%` };
       }
     } else {
-      // Si el rol es 3, permitir todas las horas sin filtros
+      // Si el rol es 3, permitir todas las horas sin filtros pero tambien agregar que sea el establecimiento
       options.where = {};
+      if (institutionId) {
+        options.where.institutionId = { [Op.like]: `%${institutionId}%` };
+      }
+    }
+
+    const { count, rows } = await HourModel.findAndCountAll(options);
+    const cantPages = calcTotalPages(count);
+
+    if (rows) {
+      res.status(200).json({ pages: cantPages, response: rows });
+    } else {
+      res.status(500).json({ msg: "Las horas no existen." });
+    }
+  } catch (error) {
+    console.log("Las horas no existen." + error);
+  }
+};
+
+exports.getHoursAdmin = async (req, res) => {
+  try {
+    const { userId, institutionId } = req.query;
+    console.log(req.query);
+    const { page } = req.params;
+    const Op = Sequelize.Op;
+    const offsetIns = calcNumOffset(page);
+
+
+    let options = {
+      offset: offsetIns,
+      limit: Number(PAGE_LIMIT),
+      include: [
+        {
+          model: UniversityModel,
+          as: "university",
+          required: true,
+        },
+        {
+          model: CarrerModel,
+          as: "carrer",
+          required: true,
+        },
+      ],
+    };
+
+    if (institutionId) {
+      options.where = { ...options.where, institutionId: { [Op.like]: `%${institutionId}%` } };
     }
 
     const { count, rows } = await HourModel.findAndCountAll(options);

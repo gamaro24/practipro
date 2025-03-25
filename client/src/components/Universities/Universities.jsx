@@ -1,11 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Button, Form } from "react-bootstrap";
-import "../../App.css";
 import "./universities.css";
-import { Footer } from "../Footer/Footer";
-import { AppContext } from "../../context/App/AppContext";
-import { isAuthenticated } from "../../helpers/helpers";
-import Navbar from "../NavBar/NavBar";
 import { UniversityContext } from "../../context/University/UniversityContext";
 import { UniversitiesList } from './UniversitiesList';
 import { useNavigate, useParams } from "react-router-dom";
@@ -36,21 +30,6 @@ const Universities = () => {
     name: "",
   });
 
-    
-  /*   const handleSubmit = async (e) => {
-      e.preventDefault();
-      await createNewUniversity(university);
-      getAllUniversities();
-    };
-  
-    const handleChangeUniversity = (e) => {
-      setuniversity({
-        ...university,
-        [e.target.name]: e.target.value,
-      });
-    }; */
-
-
     useEffect(() => {
       if (universities?.length === 0) {
         getAllUniversities();
@@ -70,11 +49,13 @@ const Universities = () => {
           universitiesFiltered?.length > 0 ? (
             <>
               <div style={{ overflowX: "auto" }}>
-                <table className="table table-hover">
+                <table className="table table-hover text-center">
                   <thead>
                     <tr>
                       <th>Nombre</th>
                       <th>Direccion</th>
+                      <th>Editar</th>
+                      <th>Eliminar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -90,8 +71,8 @@ const Universities = () => {
                 </table>
               </div>
 
-              <div className="p-2">
-                <button className="w-100 btn btn-lg btn-primary"
+              <div className="p-2 text-center">
+                <button className="btn btn-lg btn-primary"
                   onClick={() => navigate("/university/create/")}>
                   Agregar universidad</button>
               </div>

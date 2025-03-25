@@ -84,7 +84,7 @@ const HoursForm = () => {
                 <div className="form-signin text-center">
                     <div className="card-body">
 
-                        <h3 className="card-title h3 mb-3 fw-normal">Instituto {institutionData.name}</h3>
+                        <h3 className="card-title h3 mb-3 fw-normal">Establecimiento {institutionData.name}</h3>
                         <h3 className="card-title h3 mb-3 fw-normal">{isEditForm ? "Editar Hora" : "Registrar Hora"}</h3>
                         <form onSubmit={handleSubmit}>
 

@@ -2,8 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { reqAxios } from "../../helpers/helpers";
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
-import { AppContext } from "../../context/App/AppContext";
 
 const QR = () => {
     
@@ -18,7 +16,6 @@ const QR = () => {
     const [formLogin, setFormLogin] = useState(initialStateLogin);
     const [showPassword, setShowPassword] = useState(false);
     const [putDisabled, setPutDisabled] = useState(false);
-    //const { setRefreshRoleIdAndUserId } = useContext(AppContext);
 
     const handleChangeLogin = (e) => {
         setFormLogin({

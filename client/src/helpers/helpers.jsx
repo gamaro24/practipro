@@ -45,33 +45,22 @@ export const deleteAxios = async (shortUrl) => {
         "Content-Type": "application/json",
       },
     });
+
     toast.update(load, loadSuccess(res.data));
     return res;
   } catch (error) {
-    console.log(error.response.data);
-    return toast.update(load, loadError(error.response.data));
+    toast.dismiss(load);
+    alertError(error.response.data.msg);
+    throw error;
   }
 };
+
 
 export const waitAndRefresh = (path, time) => {
   setTimeout(() => {
     window.location.pathname = path;
   }, time);
 };
-
-export const deleteFile = async (nameFile, folder) => {
-  try {
-    await axios({
-      url: `${API_URL}/file/delete-file?nameFile=${nameFile}&folder=${folder}`, //your url
-      params: "",
-      method: "GET",
-      responseType: "blob", // important
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 
 export const reqAxios = async (method, shortUrl, param, data) => {
   try {
@@ -109,35 +98,6 @@ export const reqAxios = async (method, shortUrl, param, data) => {
     // return error;
   }
 };
-
-//Export in excel
-export const reqAxiosDownload = async (shortUrl, param, nameFile) => {
-  const load = toast.loading("Espere unos segundos...");
-  try {
-    await axios({
-      url: API_URL + shortUrl, //your url
-      params: param,
-      method: "GET",
-      responseType: "blob", // important
-      headers: {
-        Accept: "application/JSON",
-        "Content-Type": "application/json",
-        /*  "auth-token": token, */
-      },
-    }).then((response) => {
-      const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement("a");
-      link.href = url;
-      link.setAttribute("download", `${nameFile}.xlsx`); //or any other extension
-      document.body.appendChild(link);
-      link.click();
-    });
-    return toast.update(load, loadSuccess("Datos descargados"));
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 
 // Traductor roles
 export const translateRole = (roleName) => {

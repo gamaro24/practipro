@@ -1,5 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./hours.css";
 import { HourContext } from "../../context/Hour/HourContext";
 import { HoursList } from './HoursList';
@@ -25,7 +24,7 @@ const Hours = () => {
 
   const navigate = useNavigate();
 
-  const { createNewHour, hourState, getAllHours, getHoursFiltered } = useContext(HourContext);
+  const { createNewHour, hourState, getAllHours, getHoursFiltered, getHoursFilteredAdmin } = useContext(HourContext);
   const { hours, totalHoursPages, hoursFiltered } = hourState;
 
   const { getInstitutionData, institutionState } = useContext(InstitutionContext);
@@ -53,7 +52,11 @@ const Hours = () => {
     if (hours?.length === 0) {
       getAllHours();
     }
-    getHoursFiltered(page, filters);
+    if(isAdmin){
+      getHoursFilteredAdmin(page, filters);
+    }else{
+      getHoursFiltered(page, filters);
+    }
     getInstitutionData(id);
   }, [page]);
 

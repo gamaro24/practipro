@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ModalDelete from "../Modals/ModalDelete";
 import { UsersList } from "./UsersList";
-import { Button } from "react-bootstrap";
 import Select from "react-select";
-import { getDataUserByKey, reqAxiosDownload, translateRole } from "../../helpers/helpers";
+import { getDataUserByKey, translateRole } from "../../helpers/helpers";
 import { UserContext } from "../../context/User/UserContext";
-import { ExtensiveList } from "../ExtensiveList/ExtensiveList";
 import { RegisterContext } from "../../context/Register/RegisterContext";
 import "./users.css";
 import { PaginationCustom } from "../Pagination/Pagination";
@@ -52,9 +50,6 @@ const Users = ({ showModalCertificate }) => {
     }
   };
 
-  const exportToExcel = async () => {
-    await reqAxiosDownload(`/user/export/users`, filters, "Usuarios");
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -73,7 +68,7 @@ const Users = ({ showModalCertificate }) => {
 
   const translatedRoles = rolesSelector.map(role => ({
     ...role,
-    label: translateRole(role.label) // Function to translate the role names
+    label: translateRole(role.label)
   }));
 
   return (
@@ -85,50 +80,46 @@ const Users = ({ showModalCertificate }) => {
       <div className="ms-3 me-3">
         <h2 className="text-center"> {roleIdAdmin ? "Listado de Alumnos" : "Listado de Usuarios"} </h2>
         {roleIdAdmin ? (
-          <div className="">
-            <form
-              method="get"
-              className="d-flex align-items-center gap-3"
-              onSubmit={handleSubmit}
-            >
-              
-              <div style={{ width: "200px" }} className="me-3">
-                <label htmlFor="" className="form-label">
-                  Rol
-                </label>
-                <Select
-                  options={translatedRoles}
-                  placeholder={"Seleccione..."}
-                  name="roleId"
-                  isClearable={true}
-                  onChange={(e) => handleChangeFilter(e, "roleId")}
-                />
-              </div>
+          <div className="container-fluid">
+  <form
+    method="get"
+    className="d-flex align-items-center gap-3"
+    onSubmit={handleSubmit}
+  >
+    <div className="" style={{ minWidth: "200px" }}>
+      <label htmlFor="roleId" className="form-label">
+        Rol
+      </label>
+      <Select
+        id="roleId"
+        options={translatedRoles}
+        placeholder="Seleccione..."
+        name="roleId"
+        isClearable={true}
+        className="w-100"
+        onChange={(e) => handleChangeFilter(e, "roleId")}
+      />
 
-          
-              <button className="btn btn-primary" type="submit">
-                <i className="fa-solid fa-magnifying-glass"></i>
-              </button>
-              {pathname !== "/generate-certificate" ? (
-                <Button variant="btn btn-secondary" onClick={exportToExcel}>
-                  Exportar
-                </Button>
-              ) : null}
-            </form>
-          </div>
+    </div>
+    <button className="btn btn-primary d-flex align-items-center" type="submit">
+      <i className="fa-solid fa-magnifying-glass"></i>
+    </button>
+  </form>
+</div>
+
         ) : null}
         {usersFiltered.length > 0 ? (
           <>
             <div style={{ overflowX: "auto" }}>
-              <table className="table table-hover">
+              <table className="table table-hover text-center">
                 <thead>
                   <tr>
                     <th>Nombre</th>
                     <th>DNI</th>
                     <th>Email</th>
-                    {roleIdAdmin ? (<th>Rol</th>) : (<th>Rotaciones</th>) }
-                    <th></th>
-                    <th></th>
+                    {roleIdAdmin ? (<th>Rol</th>) : (<th>Rotaciones</th>)}
+                    {roleIdAdmin ? (<th>Editar</th>) : ""}
+                    {roleIdAdmin ? (<th>Eliminar</th>) : ""}
                   </tr>
                 </thead>
                 <tbody>
@@ -138,7 +129,6 @@ const Users = ({ showModalCertificate }) => {
                       user={user}
                       showAlert={setShowDeleteModal}
                       setUserToDelete={setUserToDelete}
-                      /*     setCustomerToDelete={handleDelete} */
                       key={user.id}
                     />
                   ))}

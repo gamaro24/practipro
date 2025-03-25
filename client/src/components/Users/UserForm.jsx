@@ -1,6 +1,4 @@
 import React, { useState, useContext, useEffect } from 'react';
-import axios from 'axios';
-import { toast } from "react-toastify";
 import { alertError } from "../../helpers/alerts";
 import "./userform.css";
 import { UserContext } from "../../context/User/UserContext";
@@ -32,11 +30,10 @@ const UserForm = () => {
   const isAdmin = getDataUserByKey("roleId") === 1;
   const isEditForm = window.location.pathname === `/user/edit/${id}`;
 
-  // const [university, setUniversity] = useState('');
-  // const [password, setPassword] = useState('');
-  // const [confirmPassword, setConfirmPassword] = useState('');
 
-  // Update variable onchange of data
+  const [showPassword, setShowPassword] = useState(false);
+  const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
+
   const handleChangeRegister = (e, name) => {
     if (e) {
       setUserRegister({
@@ -51,7 +48,6 @@ const UserForm = () => {
     }
   };
 
-  // Validations for submit register to DB
   const handleSubmit = async (e) => {
     e.preventDefault();
     //check password
@@ -311,35 +307,45 @@ const UserForm = () => {
               {!isEditForm && (
                 <>
                   {/* PASSWORD */}
-                  <div className="form-floating">
-                    <input
-                      id="floatingPassword"
-                      className="form-control"
-                      type="password"
-                      name="password"
-                      value={userRegister.password}
-                      onChange={handleChangeRegister}
-                      required
-                    />
-                    <label htmlFor="floatingPassword">Password</label>
-                  </div>
+                  <div className="d-flex align-items-center">
+                <div className="form-floating flex-grow-1">
+                  <input
+                    id="floatingPassword"
+                    className="form-control"
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={userRegister.password}
+                    onChange={handleChangeRegister}
+                    required
+                  />
+                  <label htmlFor="floatingPassword">Password</label>
+                </div>
+                <div className="ms-2 p-2 border rounded d-flex align-items-center justify-content-center" style={{ cursor: "pointer", width: "45px", height: "45px" }} onClick={() => setShowPassword(!showPassword)}>
+                  <i className={`fa-solid ${showPassword ? "fa-eye" : "fa-eye-slash"}`}></i>
+                </div>
+              </div>
 
                   <div className="p-2"></div>
 
                   {/* CONFIRM-PASSWORD */}
 
-                  <div className="form-floating">
-                    <input
-                      id="floatingConfirmPassword"
-                      className="form-control"
-                      type="password"
-                      name="confirmPassword"
-                      value={userRegister.confirmPassword}
-                      onChange={handleChangeRegister}
-                      required
-                    />
-                    <label htmlFor="floatingConfirmPassword">Confirmar Password</label>
-                  </div>
+                  <div className="d-flex align-items-center">
+                <div className="form-floating flex-grow-1">
+                  <input
+                    id="floatingConfirmPassword"
+                    className="form-control"
+                    type={showPasswordConfirm ? "text" : "password"}
+                    name="confirmPassword"
+                    value={userRegister.confirmPassword}
+                    onChange={handleChangeRegister}
+                    required
+                  />
+                  <label htmlFor="floatingConfirmPassword">Confirmar Password</label>
+                </div>
+                <div className="ms-2 p-2 border rounded d-flex align-items-center justify-content-center" style={{ cursor: "pointer", width: "45px", height: "45px" }} onClick={() => setShowPasswordConfirm(!showPasswordConfirm)}>
+                  <i className={`fa-solid ${showPasswordConfirm ? "fa-eye" : "fa-eye-slash"}`}></i>
+                </div>
+              </div>
                 </>
               )}
               <div className="p-2"></div>

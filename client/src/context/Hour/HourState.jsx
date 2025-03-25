@@ -148,6 +148,45 @@ export const HourState = ({ children }) => {
     });
   };
 
+  const getHoursFilteredAdmin = async (page, params) => {
+    const getHoursPagination = await reqAxios(
+      "get",
+      `/hour/get/getHoursAdmin/${page}`,
+      params,
+      ""
+    );
+
+    const formatHours = getHoursPagination.data.response.map(hour => {
+      // Create a new object to avoid mutating the original directly
+      const formattedHour = { ...hour };
+
+      // Ensure dates are valid before formatting
+      if (hour.dateFrom) {
+        const parsedDateFrom = parseISO(hour.dateFrom);
+        if (!isNaN(parsedDateFrom)) {
+          formattedHour.dateFrom = format(parsedDateFrom, "dd-MM-yyyy'T'HH:mm");
+        }
+      }
+
+      if (hour.dateTo) {
+        const parsedDateTo = parseISO(hour.dateTo);
+        if (!isNaN(parsedDateTo)) {
+          formattedHour.dateTo = format(parsedDateTo, "dd-MM-yyyy'T'HH:mm");
+        }
+      }
+
+      // Return the modified object for the new array
+      return formattedHour;
+    });
+    dispatch({
+      type: "SET_HOUR_FILTERED_ADMIN",
+      payload: {
+        hoursFiltered: formatHours,
+        totalHoursPages: getHoursPagination.data.pages,
+      },
+    });
+  };
+
   const editHour = async (hourRegister) => {
     await reqAxios(
       "PUT",
@@ -180,6 +219,7 @@ export const HourState = ({ children }) => {
         getHourData,
         getHourDataEdit,
         getHoursFiltered,
+        getHoursFilteredAdmin,
       }}
     >
       {children}

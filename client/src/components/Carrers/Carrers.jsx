@@ -1,9 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
-import "../../App.css";
 import "./carrers.css";
 import { CarrerContext } from "../../context/Carrer/CarrerContext";
 import { CarrersList } from './CarrersList';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ModalDelete from "../Modals/ModalDelete";
 import { PaginationCustom } from "../Pagination/Pagination";
 
@@ -69,13 +68,15 @@ const Carrers = () => {
           carrersFiltered?.length > 0 ? (
             <>
               <div style={{ overflowX: "auto" }}>
-                <table className="table table-hover">
+                <table className="table table-hover text-center">
                   <thead>
                     <tr>
                       <th>Universidad</th>
                       <th>Nombre</th>
                       <th>Codigo</th>
                       <th>Descripcion</th>
+                      <th>Editar</th>
+                      <th>Eliminar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -91,8 +92,8 @@ const Carrers = () => {
                 </table>
               </div>
 
-              <div className="p-2">
-                <button className="w-100 btn btn-lg btn-primary"
+              <div className="p-2 text-center">
+                <button className="btn btn-lg btn-primary"
                   onClick={() => navigate("/carrer/create/")}>
                   Agregar Carrera</button>
               </div>
