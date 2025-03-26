@@ -165,11 +165,11 @@ export const HourState = ({ children }) => {
 
       // Ensure dates are valid before formatting
       if (hour.dateFrom) {
-        formattedHour.dateFrom = moment.utc(hour.dateFrom).tz("America/Argentina/Buenos_Aires").format("DD-MM-YYYY HH:mm:ss");
+        formattedHour.dateFrom = moment(hour.dateFrom).tz("America/Argentina/Buenos_Aires").format("DD-MM-YYYY HH:mm:ss");
       }
 
       if (hour.dateTo) {
-        formattedHour.dateTo = moment.utc(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("DD-MM-YYYY HH:mm:ss");
+        formattedHour.dateTo = moment(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("DD-MM-YYYY HH:mm:ss");
       }
 
       // Return the modified object for the new array
