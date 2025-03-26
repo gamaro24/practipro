@@ -43,8 +43,6 @@ export const HoursList = ({
   return (
     <>
       <tr>
-        {/* <td>{hour.dateFrom.replace("T", " - ").replace(":00.000Z", "")}</td> */}
-        {/* <td>{hour.dateFrom.replace("T", " - ").replace(":00.000Z", "")}</td> */}
         <td>{hour.dateFrom}</td>
         <td>{hour.dateTo}</td>
         <td>{hour.university.name}</td>

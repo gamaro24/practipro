@@ -88,8 +88,8 @@ export const HourState = ({ children }) => {
 
       // Ensure dates are valid before formatting
       if (hour.dateFrom) {
-        const parsedDateFrom = parseISO(hour.dateFrom);  // Parse ISO string safely
-        if (!isNaN(parsedDateFrom)) {  // Check if it's a valid date
+        const parsedDateFrom = parseISO(hour.dateFrom);
+        if (!isNaN(parsedDateFrom)) {
           hour.dateFrom = format(parsedDateFrom, "dd-MM-yyyy'T'HH:mm");
         }
       }
@@ -119,25 +119,19 @@ export const HourState = ({ children }) => {
     );
 
     const formatHours = getHoursPagination.data.response.map(hour => {
-      // Create a new object to avoid mutating the original directly
+
       const formattedHour = { ...hour };
 
-      // Ensure dates are valid before formatting
+
       if (hour.dateFrom) {
-        const parsedDateFrom = parseISO(hour.dateFrom);
-        if (!isNaN(parsedDateFrom)) {
-          formattedHour.dateFrom = format(parsedDateFrom, "dd-MM-yyyy'T'HH:mm");
-        }
+        formattedHour.dateFrom = moment.utc(hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
       }
 
       if (hour.dateTo) {
-        const parsedDateTo = parseISO(hour.dateTo);
-        if (!isNaN(parsedDateTo)) {
-          formattedHour.dateTo = format(parsedDateTo, "dd-MM-yyyy'T'HH:mm");
-        }
+        formattedHour.dateTo = moment.utc(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
       }
       //console.log(moment.utc(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD HH:mm:ss"));
-      // Return the modified object for the new array
+
       return formattedHour;
     });
     dispatch({
@@ -165,11 +159,11 @@ export const HourState = ({ children }) => {
 
       // Ensure dates are valid before formatting
       if (hour.dateFrom) {
-        formattedHour.dateFrom = moment(hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
+        formattedHour.dateFrom = moment.utc(hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
       }
 
       if (hour.dateTo) {
-        formattedHour.dateTo = moment(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
+        formattedHour.dateTo = moment.utc(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
       }
 
       // Return the modified object for the new array
