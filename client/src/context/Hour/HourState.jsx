@@ -3,7 +3,6 @@ import { reqAxios } from "../../helpers/helpers";
 import { HourContext } from "./HourContext";
 import HourReducer from "./HourReducer";
 import { alertSuccess } from "../../helpers/alerts";
-import { format, parseISO } from "date-fns";
 import moment from "moment-timezone";
 
 export const HourState = ({ children }) => {
@@ -38,17 +37,11 @@ export const HourState = ({ children }) => {
     const dataHour = await reqAxios("GET", `/hour/get/${id}`, "", "");
 
     if (dataHour.data.hour.dateFrom) {
-      const parsedDateFrom = parseISO(dataHour.data.hour.dateFrom);  // Parse ISO string safely
-      if (!isNaN(parsedDateFrom)) {  // Check if it's a valid date
-        dataHour.data.hour.dateFrom = format(parsedDateFrom, "dd-MM-yyyy'T'HH:mm");
-      }
+      dataHour.data.hour.dateFrom = moment.utc(dataHour.data.hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
     }
 
     if (dataHour.data.hour.dateTo) {
-      const parsedDateTo = parseISO(dataHour.data.hour.dateTo);
-      if (!isNaN(parsedDateTo)) {
-        dataHour.data.hour.dateTo = format(parsedDateTo, "dd-MM-yyyy'T'HH:mm");
-      }
+      dataHour.data.hour.dateTom = moment.utc(dataHour.data.hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
     }
 
     dispatch({
@@ -61,17 +54,11 @@ export const HourState = ({ children }) => {
     const dataHour = await reqAxios("GET", `/hour/get/${id}`, "", "");
 
     if (dataHour.data.hour.dateFrom) {
-      const parsedDateFrom = parseISO(dataHour.data.hour.dateFrom);  // Parse ISO string safely
-      if (!isNaN(parsedDateFrom)) {  // Check if it's a valid date
-        dataHour.data.hour.dateFrom = format(parsedDateFrom, "yyyy-MM-dd'T'HH:mm:ss");
-      }
+      dataHour.data.hour.dateFrom = moment.utc(dataHour.data.hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
     }
 
     if (dataHour.data.hour.dateTo) {
-      const parsedDateTo = parseISO(dataHour.data.hour.dateTo);
-      if (!isNaN(parsedDateTo)) {
-        dataHour.data.hour.dateTo = format(parsedDateTo, "yyyy-MM-dd'T'HH:mm:ss");
-      }
+      dataHour.data.hour.dateTom = moment.utc(dataHour.data.hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
     }
 
     dispatch({
@@ -86,19 +73,12 @@ export const HourState = ({ children }) => {
 
     const formatHours = getAllHour.data.hours.map(hour => {
 
-      // Ensure dates are valid before formatting
       if (hour.dateFrom) {
-        const parsedDateFrom = parseISO(hour.dateFrom);
-        if (!isNaN(parsedDateFrom)) {
-          hour.dateFrom = format(parsedDateFrom, "dd-MM-yyyy'T'HH:mm");
-        }
+        hour.dateFrom = moment.utc(hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
       }
 
       if (hour.dateTo) {
-        const parsedDateTo = parseISO(hour.dateTo);
-        if (!isNaN(parsedDateTo)) {
-          hour.dateTo = format(parsedDateTo, "dd-MM-yyyy'T'HH:mm");
-        }
+        hour.dateTo = moment.utc(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
       }
     });
     dispatch({
@@ -130,7 +110,6 @@ export const HourState = ({ children }) => {
       if (hour.dateTo) {
         formattedHour.dateTo = moment.utc(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
       }
-      //console.log(moment.utc(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD HH:mm:ss"));
 
       return formattedHour;
     });
@@ -151,13 +130,10 @@ export const HourState = ({ children }) => {
       ""
     );
 
-
-    //moment.utc(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD HH:mm:ss"));
     const formatHours = getHoursPagination.data.response.map(hour => {
-      // Create a new object to avoid mutating the original directly
+
       const formattedHour = { ...hour };
 
-      // Ensure dates are valid before formatting
       if (hour.dateFrom) {
         formattedHour.dateFrom = moment.utc(hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
       }
@@ -166,7 +142,6 @@ export const HourState = ({ children }) => {
         formattedHour.dateTo = moment.utc(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
       }
 
-      // Return the modified object for the new array
       return formattedHour;
     });
     dispatch({
