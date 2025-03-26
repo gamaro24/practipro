@@ -7,7 +7,7 @@ export const InstitutionsList = ({ institution, setInstitutionToDelete, showAler
   const navigate = useNavigate();
 
   const generateQRCode = () => {
-    const qrUrl = `http://localhost:5000/api/qr/${institution.id}`;
+    const qrUrl = `${import.meta.env.VITE_APP_URL}/api/qr/${institution.id}`;
     setQrValue(qrUrl);
     setShowModalQr(true);
   };

@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
               .json({ msg: "Token incorrecto o el tiempo expiró." });
           }
           //cambiar por is match
-          if (true) {
+          if (isMatch) {
             return res
               .status(200)
               .json({ msg: "Inicio de sesión exitoso", user: user, token });
@@ -238,17 +238,16 @@ exports.create = async (req, res) => {
 
     if (user) {
 
-      /* Comentado por que no enviarmail
       var mailOptions = {
         from: process.env.EMAIL_APP,
-        to: "gr.l33t@gmail.com", //remember to change this mail to the variable email
-        subject: "Practi",
+        to: email,
+        subject: "PractiPro - Cuenta Registrada",
         template: "mailRegister",
         attachments: [
           {
-            filename: "appLogo.jpg",
-            path: "./public/logos/logo.jpg",
-            cid: "logo", //my mistake was putting "cid:logo@cid" here!
+            filename: "logo.svg",
+            path: "./public/logos/logo.svg",
+            cid: "logo",
           },
         ],
       };
@@ -261,7 +260,6 @@ exports.create = async (req, res) => {
           res.end();
         }
       });
-      */
       return res.status(200).json({ response: "Usuario registrado exitosamente." });
     } else {
       return res.status(500).json({ msg: "Error al registrar el usuario" });
@@ -341,5 +339,86 @@ exports.deleteById = async (req, res) => {
     }
   } catch (error) {
     res.status(500).json({ msg: "Error al eliminar el usuario." });
+  }
+};
+exports.mailRecoverPassword = async (req, res) => {
+  try {
+    const {
+      email
+    } = req.body;
+    console.log(email);
+    const user = await UserModel.findOne({
+      where: { email: email },
+    });
+
+
+    const mailUser = user.email;
+    const resetToken = jwt.sign({ mailUser }, process.env.RESET_PASSWORD_KEY, { expiresIn: '20m' });
+
+    var mailOptions = {
+      from: process.env.EMAIL_APP,
+      to: email,
+      subject: "PractiPro - Recuperar Contraseña",
+      template: "recoverPassword",
+      context: {
+        resetToken: resetToken,
+        clientUrl: process.env.VITE_CLIENT_URL,
+      },
+      attachments: [
+        {
+          filename: "logo.PNG",
+          path: "./public/logos/logo.PNG",
+          cid: "logo",
+        },
+      ],
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return res.status(500).json({ msg: error });
+      } else {
+        //console.log("Email enviado!");
+        res.end();
+      }
+    });
+
+    if (user) {
+      res.status(200).json({ msg: "Email para modificar contraseña enviado correctamente!" });
+    } else {
+      res.status(500).json({ msg: "Error al enviar el email." });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: "Error al enviar el email." });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const { resetToken, password } = req.body;
+
+    let decoded;
+    try {
+      decoded = jwt.verify(resetToken, process.env.RESET_PASSWORD_KEY); // Use the same secret key for verification
+    } catch (err) {
+      return res.status(400).json({ message: "Token no válido o expirado." });
+    }
+
+    const { mailUser } = decoded;
+
+    const user = await UserModel.findOne({ where: { email: mailUser } });
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado." });
+    }
+
+    const hashedPassword = bcrypt.hashSync(password, 10);
+
+
+    await user.update({ password: hashedPassword });
+
+    res.status(200).json({ msg: "Su contraseña ha sido cambiada exitosamente!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ msg: "Hubo un error al cambiar la contraseña." });
   }
 };

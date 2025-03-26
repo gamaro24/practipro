@@ -10,5 +10,7 @@ router.get("/getall", UserController.getAll);
 router.get("/get/users/:page", UserController.getAllPaginated);
 router.put("/edit/:id", auth.verifyToken, UserController.updateById);
 router.delete("/delete/:id", auth.verifyToken, UserController.deleteById);
+router.post("/recoverpassword", UserController.mailRecoverPassword);
+router.put("/resetpassword", UserController.resetPassword);
 
 module.exports = router;

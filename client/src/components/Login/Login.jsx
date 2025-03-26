@@ -25,7 +25,7 @@ const Login = () => {
     e.preventDefault();
     const data = await reqAxios("POST", "/user/login", "", formLogin);
 
-    if (data.status && data.status === 200) {      
+    if (data.status && data.status === 200) {
       if (institutionId) {
         const user = data.data.user;
         await reqAxios("POST", `/assist/createAssistByQR/${institutionId}`, "", {
@@ -80,6 +80,13 @@ const Login = () => {
 
               <div className="p-2"></div>
               <button className="w-100 btn btn-lg btn-primary" type="submit">Login</button>
+              <div className="p-2">
+                <h6
+                  className="w-100" style={{ cursor: "pointer", color: "blue" }} onClick={() => navigate("/recoverpassword")}>
+                    Olvide mi contraseña
+                </h6>
+              </div>
+
             </form>
           </div>
         </div>

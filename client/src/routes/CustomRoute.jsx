@@ -22,6 +22,8 @@ import Evaluations from "../components/Evaluations/Evaluations";
 import EvaluationsForm from "../components/Evaluations/EvaluationsForm";
 import Profile from "../components/Profile/Profile";
 import Notebook from "../components/Notebook/Notebook";
+import RecoverPassword from "../components/RecoverPassword/RecoverPassword";
+import ResetPassword from "../components/ResetPassword/ResetPassword";
 
 
 const CustomRoute = () => (
@@ -244,6 +246,22 @@ const CustomRoute = () => (
         element={
           <Home>
             <Login />
+          </Home>
+        }
+      />
+      <Route
+        path="recoverpassword"
+        element={
+          <Home>
+            <RecoverPassword />
+          </Home>
+        }
+      />
+      <Route
+        path="resetpassword/:resetToken"
+        element={
+          <Home>
+            <ResetPassword />
           </Home>
         }
       />

@@ -1,10 +1,10 @@
-import React, {useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import "./profile.css";
 
 import { UniversityContext } from "../../context/University/UniversityContext";
 import { CarrerContext } from "../../context/Carrer/CarrerContext";
 import { useNavigate } from "react-router-dom";
-import { getDataUserByKey } from "../../helpers/helpers";
+import { getDataUserByKey, reqAxios } from "../../helpers/helpers";
 
 const Profile = () => {
 
@@ -32,7 +32,10 @@ const Profile = () => {
 
     const navigate = useNavigate();
 
-
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const data = await reqAxios("POST", "/user/recoverpassword", "", {email: getDataUserByKey("email")});
+    };
 
     const roleId = getDataUserByKey("roleId");
     const roleNames = {
@@ -76,6 +79,15 @@ const Profile = () => {
                                 <p className="text-sm">
                                     <strong>Carrera:</strong> {carrerData?.name}
                                 </p>
+                            </div>
+
+                            <div className="p-2">
+                                <h6
+                                    className="w-100 btn btn-lg btn-primary" onClick={handleSubmit}>
+                                    Olvide mi contraseña
+                                </h6>
+
+
                             </div>
                         </div>
 
