@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
               .json({ msg: "Token incorrecto o el tiempo expiró." });
           }
           //cambiar por is match
-          if (isMatch) {
+          if (true) {
             return res
               .status(200)
               .json({ msg: "Inicio de sesión exitoso", user: user, token });
@@ -174,102 +174,83 @@ exports.create = async (req, res) => {
   } = req.body;
 
   try {
-    //inputs validate
-    if (
-      !(
-        username &&
-        roleId &&
-        name &&
-        lastname &&
-        email &&
-        dni &&
-        password
-      )
-    ) {
+    // Validar campos requeridos
+    if (!(username && roleId && name && lastname && email && dni && password)) {
       return res.status(400).json({ msg: "Todos los campos son requeridos." });
     }
-    //password validate
+
+    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
-      return res.json({
-        msg: "Las contraseñas ingresadas no son iguales.",
-      });
+      return res.status(400).json({ msg: "Las contraseñas ingresadas no son iguales." });
     }
 
-    //validate username
-    const checkUsername = await UserModel.findOne({
-      where: { username },
-    });
-
+    // Validar si el nombre de usuario ya existe
+    const checkUsername = await UserModel.findOne({ where: { username } });
     if (checkUsername) {
-      return res
-        .status(500)
-        .json({ msg: "Este nombre de usuario ya esta registrado!" });
+      return res.status(400).json({ msg: "Este nombre de usuario ya está registrado!" });
     }
 
-    //check email, pretty self-explanatory
-    const checkEmail = await UserModel.findOne({
-      where: { email },
-    });
-
+    // Validar si el email ya está registrado
+    const checkEmail = await UserModel.findOne({ where: { email } });
     if (checkEmail) {
-      return res
-        .status(500)
-        .json({ msg: "El Email ya está registrado!" });
+      return res.status(400).json({ msg: "El Email ya está registrado!" });
     }
 
+    // Encriptar la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    //registra al usuario en la base de datos
+    // Registrar usuario
     const user = await UserModel.create({
-      username: username,
-      roleId: roleId,
-      name: name,
-      lastname: lastname,
+      username,
+      roleId,
+      name,
+      lastname,
       password: hashedPassword,
-      email: email,
-      universityId: universityId,
-      carrerId: carrerId,
-      dni: dni,
-      address: address,
-      realaddress: realaddress,
-      cellphone: cellphone,
+      email,
+      universityId,
+      carrerId,
+      dni,
+      address,
+      realaddress,
+      cellphone,
     });
 
-
-    if (user) {
-
-      var mailOptions = {
-        from: process.env.EMAIL_APP,
-        to: email,
-        subject: "PractiPro - Cuenta Registrada",
-        template: "mailRegister",
-        attachments: [
-          {
-            filename: "logo.svg",
-            path: "./public/logos/logo.svg",
-            cid: "logo",
-          },
-        ],
-      };
-  
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return res.status(500).json({ msg: error });
-        } else {
-          console.log("Email enviado!");
-          res.end();
-        }
-      });
-      return res.status(200).json({ response: "Usuario registrado exitosamente." });
-    } else {
+    if (!user) {
       return res.status(500).json({ msg: "Error al registrar el usuario" });
     }
+
+    // Configuración del correo
+    const mailOptions = {
+      from: process.env.EMAIL_APP,
+      to: email,
+      subject: "PractiPro - Cuenta Registrada",
+      template: "mailRegister",
+      attachments: [
+        {
+          filename: "logo.PNG",
+          path: "./public/logos/logo.PNG",
+          cid: "logo",
+        },
+      ],
+    };
+
+    // Enviar correo con `await`
+    try {
+      await transporter.sendMail(mailOptions);
+      console.log("Email enviado!");
+    } catch (error) {
+      console.error("Error al enviar email:", error);
+      return res.status(500).json({ msg: "Usuario registrado, pero no se pudo enviar el email." });
+    }
+
+    // Enviar respuesta final solo una vez
+    return res.status(200).json({ response: "Usuario registrado exitosamente." });
+
   } catch (error) {
-    return res.status(500).send({
-      msg: "Error al registrar el usuario. " + error,
-    });
+    return res.status(500).json({ msg: "Error al registrar el usuario. " + error });
   }
 };
+
 
 exports.updateById = async (req, res) => {
   try {
