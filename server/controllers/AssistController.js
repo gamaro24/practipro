@@ -166,7 +166,6 @@ exports.getAllPaginated = async (req, res) => {
   try {
     const { id, userId, roleId, universityId, carrerId } = req.query;
     console.log(req.query);
-    //console.log(req.query);
     const { page } = req.params;
     const Op = Sequelize.Op;
     const offsetIns = calcNumOffset(page);
@@ -174,12 +173,12 @@ exports.getAllPaginated = async (req, res) => {
       where: {},
       include: [
         {
-          model: UserModel, // Correctly associate AssistModel with UserModel
+          model: UserModel,
           as: "user",
           required: true,
         },
         {
-          model: HourModel, // Correctly associate AssistModel with HourModel
+          model: HourModel,
           as: "hour",
           required: true,
           include: [
