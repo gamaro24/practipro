@@ -314,6 +314,7 @@ exports.createAssistByQR = async (req, res) => {
   try {
     const Op = Sequelize.Op;
     const currentTime = new Date();
+    console.log(currentTime);
     const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
     const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
 
@@ -332,7 +333,6 @@ exports.createAssistByQR = async (req, res) => {
     if (!user) {
       return res.status(404).json({ msg: "Usuario no encontrado." });
     }
-
     const existingHour = await HourModel.findOne({
       where: {
         institutionId,
