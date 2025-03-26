@@ -27,11 +27,28 @@ export const AssistState = ({ children }) => {
       `/assist/get/getAssist/${page}`,
       params,
       ""
+
     );
+
+    const formatHours = getAssistsPagination.data.response.map(hour => {
+
+      const formattedHour = { ...hour };
+
+
+      if (hour.dateFrom) {
+        formattedHour.dateFrom = moment.utc(hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
+      }
+
+      if (hour.dateTo) {
+        formattedHour.dateTo = moment.utc(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
+      }
+
+      return formattedHour;
+    });
     dispatch({
       type: "SET_ASSIST_FILTERED",
       payload: {
-        assistsFiltered: getAssistsPagination.data.response,
+        assistsFiltered: formatHours,
         totalAssistsPages: getAssistsPagination.data.pages,
       },
     });
@@ -42,10 +59,10 @@ export const AssistState = ({ children }) => {
     <AssistContext.Provider
       value={{
         assistState: state,
-/*         getAllHours,
-        createNewHour,
-        editHour,
-        getHourData, */
+        /*         getAllHours,
+                createNewHour,
+                editHour,
+                getHourData, */
         getAssistsFiltered,
       }}
     >
