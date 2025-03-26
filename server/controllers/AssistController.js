@@ -49,7 +49,6 @@ exports.create = async (req, res) => {
   try {
     const Op = Sequelize.Op;
     //const currentTime = new Date();
-    console.log(currentTime);
     //const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
     //const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
 
@@ -322,13 +321,13 @@ exports.createAssistByQR = async (req, res) => {
   try {
     const Op = Sequelize.Op;
     //const currentTime = new Date();
-    console.log(currentTime);
     //const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
     //const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
 
     const currentTime = new Date();
     const options = { timeZone: "America/Argentina/Buenos_Aires" };
     const currentTimeArg = currentTime.toLocaleString("en-US", options);
+    console.log(currentTime);
    
     const minTime = new Date(currentTimeArg.getTime() - 10 * 60000);
     const maxTime = new Date(currentTimeArg.getTime() + 10 * 60000); // 10 minutes despues
