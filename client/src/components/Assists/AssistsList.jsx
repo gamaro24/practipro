@@ -31,14 +31,10 @@ export const AssistsList = ({
         <td>{`${assist.user.name} ${assist.user.lastname}`}</td>
         <td>{assist.hour.institution.name}</td>
         <td>
-          {(assist?.hour?.dateFrom
-            ? format(parseISO(assist.hour.dateFrom), "dd-MM-yyyy'T'HH:mm")
-            : "Sin fecha").replace("T", " - ")}
+          {assist?.hour?.dateFrom}
         </td>
         <td>
-          {(assist?.hour?.dateTo
-            ? format(parseISO(assist.hour.dateTo), "dd-MM-yyyy'T'HH:mm")
-            : "Sin fecha").replace("T", " - ")}
+          {(assist?.hour?.dateTo)}
         </td>
 
         <td>{assist.signProfessor ? "Firmado" :

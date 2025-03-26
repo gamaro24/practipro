@@ -2,8 +2,7 @@ import { useReducer } from "react";
 import { reqAxios } from "../../helpers/helpers";
 import { AssistContext } from "./AssistContext";
 import AssistReducer from "./AssistReducer";
-import { alertSuccess } from "../../helpers/alerts";
-import { format, parseISO } from "date-fns";
+import moment from "moment";
 
 export const AssistState = ({ children }) => {
   const initialState = {
@@ -29,22 +28,23 @@ export const AssistState = ({ children }) => {
       ""
 
     );
+    console.log("getAssistsPagination", getAssistsPagination.data.response);
 
-    const formatHours = getAssistsPagination.data.response.map(hour => {
+    const formatHours = getAssistsPagination.data.response.map(assist => {
 
-      const formattedHour = { ...hour };
+      const formattedHour = { ...assist };
 
-
-      if (hour.dateFrom) {
-        formattedHour.dateFrom = moment.utc(hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
+      if (assist.hour.dateFrom) {
+        formattedHour.hour.dateFrom = moment.utc(assist.hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
       }
 
-      if (hour.dateTo) {
-        formattedHour.dateTo = moment.utc(hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
+      if (assist.hour.dateTo) {
+        formattedHour.hour.dateTo = moment.utc(assist.hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
       }
 
       return formattedHour;
     });
+    console.log(formatHours);
     dispatch({
       type: "SET_ASSIST_FILTERED",
       payload: {
