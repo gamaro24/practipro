@@ -110,17 +110,31 @@ export const translateRole = (roleName) => {
   return translations[roleName] || roleName;
 };
 
-const exportTableToPDF = () => {
+const exportTableToPDF = (user, institution) => {
   const doc = new jsPDF();
 
   // Obtener la tabla de la página
   const table = document.getElementById("myTable");
 
   doc.text("Planilla Evaluación PPS", 14, 10); // Título del PDF
+  doc.text(`Alumno: ${user}`, 14, 20);
+  doc.text(`Establecimiento: ${institution}`, 14, 30);
 
-  autoTable(doc, { html: table, startY: 20 }); // Usa autoTable de forma explícita
+  autoTable(doc, { html: table, startY: 40 });
 
-  doc.save("tabla.pdf"); // Descargar el PDF
+  const pageHeight = doc.internal.pageSize.height;
+  const pageWidth = doc.internal.pageSize.width;
+
+  // Positioning the signature section
+  doc.setFont("times", "bold");
+  doc.text("Conformidad final:", 14, pageHeight - 40);
+
+  doc.setFont("times", "normal");
+  doc.text("Firma Alumno:", 14, pageHeight - 20);
+  doc.text("Firma Docente:", pageWidth - 50, pageHeight - 20); // Right side
+
+  doc.save(`Planilla ${user}.pdf`);
+
 };
 
 export default exportTableToPDF;

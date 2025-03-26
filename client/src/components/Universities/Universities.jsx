@@ -18,7 +18,7 @@ const Universities = () => {
   const navigate = useNavigate();
 
   const { createNewUniversity, universityState, getAllUniversities, getUniversitiesFiltered } = useContext(UniversityContext);
-  const { universities, totalUniversitiesPages, universitiesFiltered} = universityState;
+  const { universities, totalUniversitiesPages, universitiesFiltered } = universityState;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [universityToDelete, setUniversityToDelete] = useState(false);
@@ -30,12 +30,12 @@ const Universities = () => {
     name: "",
   });
 
-    useEffect(() => {
-      if (universities?.length === 0) {
-        getAllUniversities();
-      }
-      getUniversitiesFiltered(page, filters);
-    }, [page]);
+  useEffect(() => {
+    if (universities?.length === 0) {
+      getAllUniversities();
+    }
+    getUniversitiesFiltered(page, filters);
+  }, [page]);
 
 
   return (
@@ -70,22 +70,22 @@ const Universities = () => {
                   </tbody>
                 </table>
               </div>
+              <PaginationCustom
+                currentPage={page}
+                totalPages={totalUniversitiesPages}
+                paginate={setPage}
 
-              <div className="p-2 text-center">
-                <button className="btn btn-lg btn-primary"
-                  onClick={() => navigate("/university/create/")}>
-                  Agregar universidad</button>
-              </div>
-            <PaginationCustom
-              currentPage={page}
-              totalPages={totalUniversitiesPages}
-              paginate={setPage}
-              
-            />
+              />
             </>
           ) : (
             <p className="text-center">No hay registros</p>
+
           )}
+        <div className="p-2 text-center">
+          <button className="btn btn-lg btn-primary"
+            onClick={() => navigate("/university/create/")}>
+            Agregar universidad</button>
+        </div>
       </div>
     </>
   );

@@ -281,12 +281,13 @@ exports.sign = async (req, res) => {
         "Capacidad de integración en equipo",
         "Relación con el contexto social y comunitario",
         "Puntajes totales",
+        "Horas Totales",
       ];
 
       const evaluations = criteriaList.map(criteria => ({
         cycleId: newCycle.id,
         criteria,
-        note: null,
+        note: (criteria === "Horas Totales" ? 12 : null),
         observations: null
       }));
 

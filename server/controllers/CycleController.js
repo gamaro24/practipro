@@ -88,6 +88,11 @@ exports.getNotebook = async (req, res) => {
           as: "evaluations",
           required: true,
         },
+        {
+          model: InstitutionModel,
+          as: "institution",  // Ensure alias matches the defined relationship in your models
+          required: true,
+        },
       ],
     };
 

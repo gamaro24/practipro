@@ -55,8 +55,8 @@ const Institutions = () => {
 
       {showModalQr && (
         <ModalQr onClose={() => setShowModalQr(false)}>
-          <div className = 'd-flex justify-content-center align-items-center'>
-          <QRCodeCanvas value={qrValue} size={256} />
+          <div className='d-flex justify-content-center align-items-center'>
+            <QRCodeCanvas value={qrValue} size={256} />
           </div>
         </ModalQr>
       )}
@@ -98,11 +98,7 @@ const Institutions = () => {
 
               <div className="p-2 text-center">
 
-                {isAdmin && (
-                  <button className="btn btn-lg btn-primary"
-                    onClick={() => navigate("/institution/create/")}>
-                    Agregar Establecimiento</button>
-                )}
+
               </div>
 
               <PaginationCustom
@@ -114,6 +110,13 @@ const Institutions = () => {
           ) : (
             <p className="text-center">No hay registros</p>
           )}
+        {isAdmin && (
+          <div className="p-2 text-center">
+          <button className="btn btn-lg btn-primary"
+            onClick={() => navigate("/institution/create/")}>
+            Agregar Establecimiento</button>
+          </div>
+        )}
       </div>
     </>
   );
