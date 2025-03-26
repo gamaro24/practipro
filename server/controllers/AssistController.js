@@ -48,9 +48,17 @@ exports.getAll = async (req, res) => {
 exports.create = async (req, res) => {
   try {
     const Op = Sequelize.Op;
+    //const currentTime = new Date();
+    console.log(currentTime);
+    //const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
+    //const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
+
     const currentTime = new Date();
-    const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
-    const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutos después
+    const options = { timeZone: "America/Argentina/Buenos_Aires" };
+    const currentTimeArg = currentTime.toLocaleString("en-US", options);
+   
+    const minTime = new Date(currentTimeArg.getTime() - 10 * 60000);
+    const maxTime = new Date(currentTimeArg.getTime() + 10 * 60000); // 10 minutes despues
 
     const userId = req.body.userId || req.query.userId;
     const hourId = req.body.hourId || req.query.hourId;
@@ -313,10 +321,17 @@ exports.sign = async (req, res) => {
 exports.createAssistByQR = async (req, res) => {
   try {
     const Op = Sequelize.Op;
-    const currentTime = new Date();
+    //const currentTime = new Date();
     console.log(currentTime);
-    const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
-    const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
+    //const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
+    //const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
+
+    const currentTime = new Date();
+    const options = { timeZone: "America/Argentina/Buenos_Aires" };
+    const currentTimeArg = currentTime.toLocaleString("en-US", options);
+   
+    const minTime = new Date(currentTimeArg.getTime() - 10 * 60000);
+    const maxTime = new Date(currentTimeArg.getTime() + 10 * 60000); // 10 minutes despues
 
     const userId = req.body.userId || req.query.userId;
     const institutionId = req.params.institutionId;
