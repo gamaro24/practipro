@@ -20,7 +20,7 @@ const Carrers = () => {
   const navigate = useNavigate();
 
   const { createNewCarrer, carrerState, getAllCarrers, getCarrersFiltered } = useContext(CarrerContext);
-  const { carrers, totalCarrersPages, carrersFiltered} = carrerState;
+  const { carrers, totalCarrersPages, carrersFiltered } = carrerState;
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [carrerToDelete, setCarrerToDelete] = useState(false);
@@ -35,7 +35,7 @@ const Carrers = () => {
     description: "",
   });
 
-    
+
   /*   const handleSubmit = async (e) => {
       e.preventDefault();
       await createNewCarrer(carrer);
@@ -50,12 +50,12 @@ const Carrers = () => {
     }; */
 
 
-    useEffect(() => {
-      if (carrers?.length === 0) {
-        getAllCarrers();
-      }
-      getCarrersFiltered(page, filters);
-    }, [page]);
+  useEffect(() => {
+    if (carrers?.length === 0) {
+      getAllCarrers();
+    }
+    getCarrersFiltered(page, filters);
+  }, [page]);
 
   return (
     <>
@@ -92,20 +92,21 @@ const Carrers = () => {
                 </table>
               </div>
 
-              <div className="p-2 text-center">
-                <button className="btn btn-lg btn-primary"
-                  onClick={() => navigate("/carrer/create/")}>
-                  Agregar Carrera</button>
-              </div>
-            <PaginationCustom
-              currentPage={page}
-              totalPages={totalCarrersPages}
-              paginate={setPage}
-            />
+
+              <PaginationCustom
+                currentPage={page}
+                totalPages={totalCarrersPages}
+                paginate={setPage}
+              />
             </>
           ) : (
             <p className="text-center">No hay registros</p>
           )}
+        <div className="p-2 text-center">
+          <button className="btn btn-lg btn-primary"
+            onClick={() => navigate("/carrer/create/")}>
+            Agregar Carrera</button>
+        </div>
       </div>
     </>
   );

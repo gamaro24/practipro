@@ -9,6 +9,8 @@ import exportTableToPDF from "../../helpers/helpers";
 const Notebook = () => {
   const navigate = useNavigate();
 
+  const user = `${getDataUserByKey("name")} ${getDataUserByKey("lastname")}`;
+
   const initialFilters = {
     userId: getDataUserByKey("id"),
   };
@@ -22,14 +24,22 @@ const Notebook = () => {
     getNotebook(filters);
   }, []);
 
+  const getInstitution = (notebook) => {
+    if (notebook.length > 0) {
+      return notebook[0].institution.name;
+    }
+    return null;
+  };
+  
+  const institution = getInstitution(notebook);
+
   return (
     <>
       <div id="exportContent">
         <h1 className="text-center">Registro de Evaluaciones</h1>
-        <h2 className="text-center">Resumen de Calificaciones por Ciclo</h2>
 
-        <div className="mb-3">
-          <button onClick={() => exportTableToPDF("exportContent")} className="btn btn-primary">
+        <div className="mb-3 text-center">
+          <button onClick={() => exportTableToPDF(user,institution)} className="btn btn-primary">
             Exportar a PDF
           </button>
         </div>

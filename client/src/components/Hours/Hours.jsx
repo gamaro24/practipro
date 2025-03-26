@@ -74,13 +74,15 @@ const Hours = () => {
           hoursFiltered?.length > 0 ? (
             <>
               <div style={{ overflowX: "auto" }}>
-                <table className="table table-hover">
+                <table className="table table-hover text-center">
                   <thead>
                     <tr>
                       <th>Hora Entrada</th>
                       <th>Hora Salida</th>
                       <th>Universidad</th>
                       <th>Carrera</th>
+                      {isAdmin ? (<th>Editar</th>) : <th>Registrar</th>}
+                      {isAdmin ? (<th>Eliminar</th>) : ""}
                     </tr>
                   </thead>
                   <tbody>
