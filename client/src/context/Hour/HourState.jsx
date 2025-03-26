@@ -4,6 +4,7 @@ import { HourContext } from "./HourContext";
 import HourReducer from "./HourReducer";
 import { alertSuccess } from "../../helpers/alerts";
 import { format, parseISO } from "date-fns";
+import moment from "moment-timezone";
 
 export const HourState = ({ children }) => {
   const initialState = {
@@ -135,7 +136,7 @@ export const HourState = ({ children }) => {
           formattedHour.dateTo = format(parsedDateTo, "dd-MM-yyyy'T'HH:mm");
         }
       }
-
+      //console.log(moment.utc(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD HH:mm:ss"));
       // Return the modified object for the new array
       return formattedHour;
     });
@@ -156,23 +157,19 @@ export const HourState = ({ children }) => {
       ""
     );
 
+
+    //moment.utc(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("YYYY-MM-DD HH:mm:ss"));
     const formatHours = getHoursPagination.data.response.map(hour => {
       // Create a new object to avoid mutating the original directly
       const formattedHour = { ...hour };
 
       // Ensure dates are valid before formatting
       if (hour.dateFrom) {
-        const parsedDateFrom = parseISO(hour.dateFrom);
-        if (!isNaN(parsedDateFrom)) {
-          formattedHour.dateFrom = format(parsedDateFrom, "dd-MM-yyyy'T'HH:mm");
-        }
+        formattedHour.dateFrom = moment.utc(hour.dateFrom).tz("America/Argentina/Buenos_Aires").format("DD-MM-YYYY HH:mm:ss");
       }
 
       if (hour.dateTo) {
-        const parsedDateTo = parseISO(hour.dateTo);
-        if (!isNaN(parsedDateTo)) {
-          formattedHour.dateTo = format(parsedDateTo, "dd-MM-yyyy'T'HH:mm");
-        }
+        formattedHour.dateTo = moment.utc(hour.dateTo).tz("America/Argentina/Buenos_Aires").format("DD-MM-YYYY HH:mm:ss");
       }
 
       // Return the modified object for the new array
