@@ -63,7 +63,7 @@ exports.login = async (req, res) => {
               .json({ msg: "Token incorrecto o el tiempo expiró." });
           }
           //cambiar por is match
-          if (true) {
+          if (isMatch) {
             return res
               .status(200)
               .json({ msg: "Inicio de sesión exitoso", user: user, token });
@@ -174,29 +174,24 @@ exports.create = async (req, res) => {
   } = req.body;
 
   try {
-    // Validar campos requeridos
     if (!(username && roleId && name && lastname && email && dni && password)) {
       return res.status(400).json({ msg: "Todos los campos son requeridos." });
     }
 
-    // Validar que las contraseñas coincidan
     if (password !== confirmPassword) {
       return res.status(400).json({ msg: "Las contraseñas ingresadas no son iguales." });
     }
 
-    // Validar si el nombre de usuario ya existe
     const checkUsername = await UserModel.findOne({ where: { username } });
     if (checkUsername) {
       return res.status(400).json({ msg: "Este nombre de usuario ya está registrado!" });
     }
 
-    // Validar si el email ya está registrado
     const checkEmail = await UserModel.findOne({ where: { email } });
     if (checkEmail) {
       return res.status(400).json({ msg: "El Email ya está registrado!" });
     }
 
-    // Encriptar la contraseña
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Registrar usuario
@@ -219,7 +214,7 @@ exports.create = async (req, res) => {
       return res.status(500).json({ msg: "Error al registrar el usuario" });
     }
 
-    // Configuración del correo
+    // Correo
     const mailOptions = {
       from: process.env.EMAIL_APP,
       to: email,
@@ -234,7 +229,6 @@ exports.create = async (req, res) => {
       ],
     };
 
-    // Enviar correo con `await`
     try {
       await transporter.sendMail(mailOptions);
       console.log("Email enviado!");
