@@ -19,7 +19,7 @@
         {
             "name": "Alumnos",
             "navigate": "/users",
-            "authRole": [2,4]  
+            "authRole": [2]  
         },
         {
             "name": "Carreras",

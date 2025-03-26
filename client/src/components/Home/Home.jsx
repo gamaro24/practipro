@@ -7,10 +7,10 @@ const Home = ({ children }) => {
     return (
         <>
           <div className="">
-              <div className="show-menu-desktop h-100">
+              <div className="h-100">
                     <div>
                         <Navbar></Navbar>
-                        <div className="p-2"></div>
+                        <div className="mb-4"></div>
                         {children}
                     </div>
               </div>
