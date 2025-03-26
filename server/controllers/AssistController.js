@@ -16,6 +16,7 @@ const UserModel = require("../models/UserModel");
 const CarrerModel = require("../models/CarrerModel");
 const CycleModel = require("../models/CycleModel");
 const EvaluationModel = require("../models/EvaluationModel");
+const moment = require("moment-timezone");
 
 exports.getById = async (req, res) => {
   try {
@@ -52,12 +53,14 @@ exports.create = async (req, res) => {
     //const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
     //const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
 
-    const currentTime = new Date();
-    const options = { timeZone: "America/Argentina/Buenos_Aires" };
-    const currentTimeArg = currentTime.toLocaleString("en-US", options);
-   
-    const minTime = new Date(currentTimeArg.getTime() - 10 * 60000);
-    const maxTime = new Date(currentTimeArg.getTime() + 10 * 60000); // 10 minutes despues
+    const currentTimeArg = moment().tz("America/Argentina/Buenos_Aires");
+    const minTime = currentTimeArg.clone().subtract(10, "minutes");
+    const maxTime = currentTimeArg.clone().add(10, "minutes");
+
+    console.log("Hora actual Argentina:", currentTimeArg.format("YYYY-MM-DD HH:mm:ss"));
+    console.log("Min Time:", minTime.format("YYYY-MM-DD HH:mm:ss"));
+    console.log("Max Time:", maxTime.format("YYYY-MM-DD HH:mm:ss"));
+
 
     const userId = req.body.userId || req.query.userId;
     const hourId = req.body.hourId || req.query.hourId;
@@ -324,13 +327,9 @@ exports.createAssistByQR = async (req, res) => {
     //const minTime = new Date(currentTime.getTime() - 10 * 60000); // 10 minutos antes
     //const maxTime = new Date(currentTime.getTime() + 10 * 60000); // 10 minutes despues
 
-    const currentTime = new Date();
-    const options = { timeZone: "America/Argentina/Buenos_Aires" };
-    const currentTimeArg = currentTime.toLocaleString("en-US", options);
-    console.log(currentTime);
-   
-    const minTime = new Date(currentTimeArg.getTime() - 10 * 60000);
-    const maxTime = new Date(currentTimeArg.getTime() + 10 * 60000); // 10 minutes despues
+    const currentTimeArg = moment().tz("America/Argentina/Buenos_Aires");
+    const minTime = currentTimeArg.clone().subtract(10, "minutes");
+    const maxTime = currentTimeArg.clone().add(10, "minutes");
 
     const userId = req.body.userId || req.query.userId;
     const institutionId = req.params.institutionId;
