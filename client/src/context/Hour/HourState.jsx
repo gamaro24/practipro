@@ -41,9 +41,8 @@ export const HourState = ({ children }) => {
     }
 
     if (dataHour.data.hour.dateTo) {
-      dataHour.data.hour.dateTom = moment.utc(dataHour.data.hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
+      dataHour.data.hour.dateTo = moment.utc(dataHour.data.hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
     }
-
     dispatch({
       type: "GET_HOUR_DATA",
       payload: dataHour.data.hour,
@@ -54,13 +53,12 @@ export const HourState = ({ children }) => {
     const dataHour = await reqAxios("GET", `/hour/get/${id}`, "", "");
 
     if (dataHour.data.hour.dateFrom) {
-      dataHour.data.hour.dateFrom = moment.utc(dataHour.data.hour.dateFrom).format("DD-MM-YYYY HH:mm:ss");
+      dataHour.data.hour.dateFrom = moment.utc(dataHour.data.hour.dateFrom).format("YYYY-MM-DD HH:mm:ss");
     }
 
     if (dataHour.data.hour.dateTo) {
-      dataHour.data.hour.dateTom = moment.utc(dataHour.data.hour.dateTo).format("DD-MM-YYYY HH:mm:ss");
+      dataHour.data.hour.dateTo = moment.utc(dataHour.data.hour.dateTo).format("YYYY-MM-DD HH:mm:ss");
     }
-
     dispatch({
       type: "GET_HOUR_DATA_EDIT",
       payload: dataHour.data.hour,
