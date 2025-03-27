@@ -194,7 +194,7 @@ const CustomRoute = () => (
       <Route
         path="users"
         element={
-          <PrivateRoute role={allowHigherStatus}>
+          <PrivateRoute role={allowProfessorAndAdmin}>
             <Users />
           </PrivateRoute>
         }
