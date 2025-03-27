@@ -96,7 +96,7 @@ const HoursForm = () => {
                                     className="form-control"
                                     type="datetime-local"
                                     name="dateFrom"
-                                    value={hourRegister?.dateFrom ? format(new Date(hourRegister.dateFrom), "yyyy-MM-dd'T'HH:mm") : ""}
+                                    value={hourRegister?.dateFrom}
                                     onChange={handleChangeRegister}
                                     required
                                 />
